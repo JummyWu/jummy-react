@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { Route } from "react-router-dom";
 import { withStyles, Grid } from '@material-ui/core';
 
-import { FrameGrid } from '../common/components'
-import ArticleList from './article_list'
-import SideBar from './side_bar'
+import { FrameGrid } from './common/components'
+import ArticleList from './blog/article_list'
+import SideBar from './blog/side_bar'
+import ArticleDetail from './blog/article_detail'
 
 
 const mainStyle = theme => ({
@@ -16,7 +18,8 @@ const mainStyle = theme => ({
     }
   },
   paper: {
-    width: '100%'
+    paddingBottom: 8,
+    marginBottom: 8,
   },
   '@global': theme.global,
 })
@@ -28,7 +31,10 @@ class Main extends Component {
     return (
       <FrameGrid container component={'main'} className={classes.root}>
         <Grid item md={8}>
-          <ArticleList></ArticleList>
+          {/* <ArticleList></ArticleList> */}
+          {/* <ArticleDetail /> */}
+          <Route exact path="/" component={ArticleList} />
+          <Route path="/article/:id" component={ArticleDetail} />
         </Grid>
         <Grid item md={4}>
           <SideBar />
