@@ -50,31 +50,31 @@ class ArticleListItem extends Component {
       <Grid component={'article'}
         item className={classes.article}>
         <div className={classes.title}>
-          <Link to={url}>{article.Title}</Link>
+          <Link to={url}>{article.title}</Link>
         </div>
-        <div className={classes.content}>
-          {article.Content.replace(/<\/?[^>]*>/g, '').substr(0, 150)}&nbsp;...&emsp;
+        <div className={classes.desc}>
+          {article.desc.replace(/<\/?[^>]*>/g, '').substr(0, 150)}&nbsp;...&emsp;
           <Link to={url}>阅读全文 &gt;</Link>
         </div>
         <div className={classes.info}>
           {formatDate(article.Time)}&emsp;
           {article.views} 阅读&emsp;
-          分类: {this.formatCategory(article.Category)}&emsp;
-          话题: {this.formatTopics(article.Topics)}
+          分类: {this.formatCategory(article.category)}&emsp;
+          话题: {this.formatTopics(article.tag)}
         </div>
       </Grid>
     )
   }
   formatCategory(category) {
-    // return <Link to={`/article/category/1/`}>{category.name}</Link>
+    return <Link to={`/article/category/${category.id}/`}>{category.name}</Link>
   }
   formatTopics(topics) {
-    return  (
-      <Fragment key="1">
-        <Link to={`/article/topic/1/`}>
-          你好
-        </Link>&nbsp;&nbsp;
-      </Fragment>
+    return (      
+    <Fragment key="topics.id">
+      <Link to={`/article/topic/${topics.id}/`}>
+        {topics.name}
+      </Link>&nbsp;&nbsp;
+    </Fragment>
     )
   }
 }
@@ -102,11 +102,15 @@ class ArticleList extends Component {
         </Fade>
       )
     }
-    let pageInfo = articleList.pageInfo
+    // let pageInfo = articleList.pageInfo
+    let next = articleList.data.next
+    let num  = articleList.data.num
+    let previous = articleList.data.previous
     window.a = articleList
     let items = articleList.data.data.map((article, index) => {
+      console.log(article)
       return (
-        <ArticleListItem key={article.Id} article={article} />
+        <ArticleListItem key={article.id} article={article} />
       )
     })
     return (
@@ -118,13 +122,14 @@ class ArticleList extends Component {
           <Grid container>
             {items}
           </Grid>
-          {/* <Pagination page={pageInfo.page} pageSize={pageInfo.pageSize} total={pageInfo.total} /> */}
+          <Pagination page={next} pageSize={num} total={previous} />
         </Paper>
       </Fade>
     )
   }
   getArticleList = async (page) => {
     let articleList = await articleManager.getListData(page)
+    console.log(articleList)
     this.setState({ articleList: articleList })
     return articleList
   }
