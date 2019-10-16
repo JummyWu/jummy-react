@@ -20,6 +20,9 @@ const frame_style = {
 const FrameGrid = withStyles(frame_style)(Grid)
 
 const paginationStyle = theme => ({
+  pageRegist: {
+    // paddingLeft: '500',
+  },
   pagination: {
     margin: '20px 0',
     textAlign: 'center',
@@ -56,22 +59,40 @@ class Pagination extends Component {
       pageSize: this.props.pageSize,
       total: this.props.total,
     }
-    pageInfo.lastPage = Math.ceil(pageInfo.total / pageInfo.pageSize)
-    pageInfo.prevPage = pageInfo.page > 2 ? (pageInfo.page - 1): null
-    pageInfo.morePrev = pageInfo.page > 3 ? true : false
-    pageInfo.nextPage = pageInfo.page < (pageInfo.lastPage -1) ? (pageInfo.page + 1) : null
-    pageInfo.moreNext = pageInfo.page < (pageInfo.lastPage -2) ? true : false
-    return (
-      <div className={classes.pagination}>
-        {pageInfo.page !== 1 && <a href={'/'}>1</a>}
-        {pageInfo.morePrev && <span>...</span>}
-        {pageInfo.prevPage !== null && <a href={'/'}>{pageInfo.prevPage}</a>}
-        <a href={'/'} className={classes.currenPage}>{pageInfo.page}</a>
-        {pageInfo.nextPage !== null && <a href={'/'}>{pageInfo.nextPage}</a>}
-        {pageInfo.moreNext && <span>...</span>}
-        {pageInfo.page !== pageInfo.lastPage && <a href={'/'}>{pageInfo.lastPage}</a>}
-      </div>
-    )
+    // pageInfo.lastPage = Math.ceil(pageInfo.total / pageInfo.pageSize)
+    // pageInfo.prevPage = pageInfo.page > 2 ? (pageInfo.page - 1): null
+    // pageInfo.morePrev = pageInfo.page > 3 ? true : false
+    // pageInfo.nextPage = pageInfo.page < (pageInfo.lastPage -1) ? (pageInfo.page + 1) : null
+    // pageInfo.moreNext = pageInfo.page < (pageInfo.lastPage -2) ? true : false
+    if (pageInfo.page === 1) {
+      return (
+        <div className={classes.pagination}>
+          <a href={'/'} className={classes.pageRegist}>下一页</a>
+        </div>
+      );
+    } else if (pageInfo.total !== -1) {
+      return (
+        <div className={classes.pagination}>
+          <a href={'/'}>上一页</a>
+        </div>
+      );
+    } else {
+      return (
+        <div></div>
+      );
+    }
+    
+    // return (
+    //   <div className={classes.pagination}>
+    //     {pageInfo.page !== 1 && <a href={'/'}>1</a>}
+    //     {pageInfo.morePrev && <span>...</span>}
+    //     {pageInfo.prevPage !== null && <a href={'/'}>{pageInfo.prevPage}</a>}
+    //     <a href={'/'} className={classes.currenPage}>{pageInfo.page}</a>
+    //     {pageInfo.nextPage !== null && <a href={'/'}>{pageInfo.nextPage}</a>}
+    //     {pageInfo.moreNext && <span>...</span>}
+    //     {pageInfo.page !== pageInfo.lastPage && <a href={'/'}>{pageInfo.lastPage}</a>}
+    //   </div>
+    // )
   }
 }
 
