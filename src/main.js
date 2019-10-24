@@ -4,14 +4,12 @@ import { withStyles, Grid } from '@material-ui/core';
 
 import { FrameGrid } from './common/components'
 import ArticleList from './blog/article_list'
-import SideBar from './blog/side_bar'
 import ArticleDetail from './blog/article_detail'
 
 
 const mainStyle = theme => ({
   root: {
-    marginTop: 16,
-    marginBottom: 16,
+    margin: '25px 0px',
     '&>div': {
       // margin: '0 8px',
       padding: '0 8px',
@@ -29,15 +27,12 @@ class Main extends Component {
   render() {
     let { classes } = this.props
     return (
-      <FrameGrid container component={'main'} className={classes.root}>
-        <Grid item md={8}>
-          {/* <ArticleList></ArticleList> */}
+      <FrameGrid container component={'main'}>
+        <Grid item md={12}>
+          <ArticleList></ArticleList>
           {/* <ArticleDetail /> */}
-          <Route exact path="/" component={ArticleList} />
-          <Route path="/article/:id" component={ArticleDetail} />
-        </Grid>
-        <Grid item md={4}>
-          <SideBar />
+          {/* <Route exact path="/" component={ArticleList} /> */}
+          {/* <Route path="/article/:id" component={ArticleDetail} /> */}
         </Grid>
       </FrameGrid>
     );
